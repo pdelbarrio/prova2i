@@ -1,0 +1,35 @@
+.App {
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.App-header {
+  margin: 0 auto;
+}
+.maincontainer {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding-top: 20vh;
+}
+.maincontainer button {
+  max-width: 100px;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.input input {
+  height: 20px;
+}
+
+.input p {
+  padding-left: 40px;
+}
+.download {
+  margin: auto;
+}

@@ -19,7 +19,7 @@ function App() {
       console.log(res.data.data.data);
       setDataFromDB(res.data.data.data);
       if (!res.data.data.data[0]) {
-        alert("No hay datos para la consulta"); // TODO: poner un error con toastify???
+        alert("No hay datos para esta consulta"); // TODO: poner un error con toastify???
         setDataFromDB(null);
       }
     } catch (error) {
@@ -32,32 +32,37 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">SERVICIOS</header>
-      <form method="post" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>
-            <input
-              type="number"
-              {...register("clientCode", {
-                valueAsNumber: true,
-              })}
-            />
+      <div className="maincontainer">
+        <form method="post" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label className="input">
+              <input
+                type="number"
+                {...register("clientCode", {
+                  valueAsNumber: true,
+                })}
+              />
 
-            <p>Código Cliente</p>
-          </label>
-          <label>
-            <input
-              type="number"
-              {...register("stationCode", {
-                valueAsNumber: true,
-              })}
-            />
+              <p>Código Cliente</p>
+            </label>
 
-            <p>Código Estación</p>
-          </label>
-          <button type="submit">Consultar datos</button>
-        </div>
-      </form>
-      {dataFromDB ? <CSVLink data={dataFromDB}>Download data</CSVLink> : null}
+            <label className="input">
+              <input
+                type="number"
+                {...register("stationCode", {
+                  valueAsNumber: true,
+                })}
+              />
+
+              <p>Código Estación</p>
+            </label>
+          </div>
+          <button type="submit">Consultar</button>
+        </form>
+      </div>
+      <div className="download">
+        {dataFromDB ? <CSVLink data={dataFromDB}>Download data</CSVLink> : null}
+      </div>
     </div>
   );
 }
