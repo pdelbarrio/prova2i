@@ -20,7 +20,7 @@ function App() {
     try {
       const { clientCode, stationCode } = data;
       // console.log(clientCode, stationCode);
-      const res = await axios.get("http://localhost:4000/api/data", {
+      const res = await axios.get(import.meta.env.VITE_API_BASE_URL, {
         params: { clientCode, stationCode },
       });
       res.data;
