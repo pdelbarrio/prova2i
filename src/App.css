@@ -5,23 +5,51 @@
   margin: 0 auto;
   margin-top: 50px;
 }
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+}
 .App-header {
-  margin: 0 auto;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.image {
+  height: 100%;
 }
 .maincontainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: auto;
-  padding-top: 20vh;
+  padding: 10px 90px 40px 90px;
+  background-color: #092c74;
 }
 .maincontainer button {
   max-width: 100px;
+  padding: 10px 15px 10px 15px;
+  margin-top: 40px;
+  font-size: 15px;
+  color: #092c74;
+}
+
+.maincontainer button:hover {
+  max-width: 100px;
+  padding: 10px 15px 10px 15px;
+  margin-top: 40px;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: rgb(111, 104, 104);
 }
 
 .input {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
+  align-items: baseline;
 }
 .input input {
   height: 20px;
@@ -29,7 +57,19 @@
 
 .input p {
   padding-left: 40px;
+  font-weight: bold;
+  color: #fc4513;
+}
+.buttoncontainer {
+  display: flex;
+  align-self: flex-end;
+  justify-content: space-between;
 }
 .download {
+  padding-top: 30px;
   margin: auto;
+}
+.error {
+  font-size: small;
+  color: red;
 }

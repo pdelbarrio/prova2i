@@ -3,9 +3,17 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { CSVLink, CSVDownload } from "react-csv";
 import { useState } from "react";
+import { inputValidation } from "./utils/validation";
+import image from "./picto-tpv.png";
+import { setErrorToast } from "./utils/toasts";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [dataFromDB, setDataFromDB] = useState(null);
 
   const onSubmit = async (data) => {
@@ -19,7 +27,7 @@ function App() {
       console.log(res.data.data.data);
       setDataFromDB(res.data.data.data);
       if (!res.data.data.data[0]) {
-        alert("No hay datos para esta consulta"); // TODO: poner un error con toastify???
+        setErrorToast("No hay datos para esta consulta");
         setDataFromDB(null);
       }
     } catch (error) {
@@ -31,33 +39,46 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">SERVICIOS</header>
       <div className="maincontainer">
+        <div className="header">
+          <img className="image" src={image} alt="image" />
+          <p className="App-header">SERVICIOS</p>
+        </div>
         <form method="post" onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label className="input">
+          <label className="input">
+            <div>
               <input
                 type="number"
-                {...register("clientCode", {
+                {...register("clientCode", inputValidation, {
+                  valueAsNumber: true,
+                })}
+              />
+              {errors.clientCode ? (
+                <p className="error">{errors.clientCode.message}</p>
+              ) : null}
+            </div>
+            <p>Código Cliente</p>
+          </label>
+
+          <label className="input">
+            <div>
+              <input
+                type="number"
+                {...register("stationCode", inputValidation, {
                   valueAsNumber: true,
                 })}
               />
 
-              <p>Código Cliente</p>
-            </label>
-
-            <label className="input">
-              <input
-                type="number"
-                {...register("stationCode", {
-                  valueAsNumber: true,
-                })}
-              />
-
-              <p>Código Estación</p>
-            </label>
+              {errors.stationCode ? (
+                <p className="error">{errors.stationCode.message}</p>
+              ) : null}
+            </div>
+            <p>Código Estación</p>
+          </label>
+          <div className="buttoncontainer">
+            <div></div>
+            <button type="submit">Consultar</button>
           </div>
-          <button type="submit">Consultar</button>
         </form>
       </div>
       <div className="download">
