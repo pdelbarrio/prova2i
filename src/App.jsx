@@ -1,19 +1,31 @@
 import "./App.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useEffect } from "react";
+import { CSVLink, CSVDownload } from "react-csv";
+import { useState } from "react";
 
 function App() {
   const { register, handleSubmit } = useForm();
+  const [dataFromDB, setDataFromDB] = useState(null);
 
   const onSubmit = async (data) => {
-    const { clientCode, stationCode } = data;
-    console.log(clientCode, stationCode);
-    const res = await axios.get("http://localhost:4000/api/data", {
-      params: { clientCode, stationCode },
-    });
-    res.data;
-    console.log(res.data.data.data[0]);
+    try {
+      const { clientCode, stationCode } = data;
+      // console.log(clientCode, stationCode);
+      const res = await axios.get("http://localhost:4000/api/data", {
+        params: { clientCode, stationCode },
+      });
+      res.data;
+      console.log(res.data.data.data);
+      setDataFromDB(res.data.data.data);
+      if (!res.data.data.data[0]) {
+        alert("No hay datos para la consulta"); // TODO: poner un error con toastify???
+      }
+    } catch (error) {
+      console.log(error.response);
+
+      return error.response;
+    }
   };
 
   return (
@@ -41,9 +53,10 @@ function App() {
 
             <p>Código Estación</p>
           </label>
-          <button type="submit">Descargar CSV</button>
+          <button type="submit">Consultar datos</button>
         </div>
       </form>
+      {dataFromDB ? <CSVLink data={dataFromDB}>Download data</CSVLink> : null}
     </div>
   );
 }
