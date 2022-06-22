@@ -1,45 +1,51 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import "./App.css";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async (data) => {
+    const { clientCode, stationCode } = data;
+    console.log(clientCode, stationCode);
+    const res = await axios.get("http://localhost:4000/api/data", {
+      params: { clientCode, stationCode },
+    });
+    res.data;
+    console.log(res.data.data.data[0]);
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <header className="App-header">SERVICIOS</header>
+      <form method="post" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>
+            <input
+              type="number"
+              {...register("clientCode", {
+                valueAsNumber: true,
+              })}
+            />
+
+            <p>Código Cliente</p>
+          </label>
+          <label>
+            <input
+              type="number"
+              {...register("stationCode", {
+                valueAsNumber: true,
+              })}
+            />
+
+            <p>Código Estación</p>
+          </label>
+          <button type="submit">Descargar CSV</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
