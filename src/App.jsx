@@ -20,6 +20,7 @@ function App() {
       setDataFromDB(res.data.data.data);
       if (!res.data.data.data[0]) {
         alert("No hay datos para la consulta"); // TODO: poner un error con toastify???
+        setDataFromDB(null);
       }
     } catch (error) {
       console.log(error.response);
